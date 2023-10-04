@@ -147,6 +147,7 @@ section {
   }
 }
 
+/* Header */
 .header {
   position: sticky;
   top: 0;
