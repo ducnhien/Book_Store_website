@@ -429,6 +429,25 @@ section {
   background-color: var(--red);
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  margin-top: 1.5rem;
+}
+
+.pagination a {
+  font-size: 2rem;
+  padding: 0 1rem;
+  border-right: var(--border);
+}
+
+.pagination a:hover {
+  background: var(--orange);
+  color: var(--white);
+}
+
 .about .flex {
   max-width: 1200px;
   margin: 0 auto;

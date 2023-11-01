@@ -27,6 +27,17 @@ if (isset($_POST['add_to_cart'])) {
     }
 }
 
+$limit = 6;
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$offset = ($page - 1) * $limit;
+
+$select_products = mysqli_query($conn, "SELECT * FROM `products` LIMIT {$offset}, {$limit}") or die("query failed");
+
+$countProducts = mysqli_query($conn, "SELECT COUNT(*) as total FROM `products`") or die("query failed");
+$row = mysqli_fetch_assoc($countProducts);
+$totalProducts = $row['total'];
+$totalPages = ceil($totalProducts / $limit);
+
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +73,6 @@ if (isset($_POST['add_to_cart'])) {
         <div class="box-container">
 
             <?php
-            $select_products = mysqli_query($conn, "SELECT * FROM `products`") or die('query failed');
             if (mysqli_num_rows($select_products) > 0) {
                 while ($fetch_products = mysqli_fetch_assoc($select_products)) {
             ?>
@@ -84,13 +94,16 @@ if (isset($_POST['add_to_cart'])) {
             ?>
         </div>
 
+        <div class="pagination">
+            <?php
+            for ($i = 1; $i <= $totalPages; $i++) {
+                $currentPage = ($page == $i) ? 'current-page' : '';
+                echo '<a href="?page=' . $i . '" class="' . $currentPage . '">' . $i . '</a>';
+            }
+            ?>
+        </div>
+
     </section>
-
-
-
-
-
-
 
 
     <?php include 'footer.php'; ?>
